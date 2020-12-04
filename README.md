@@ -10,3 +10,7 @@ Vue
 8. https://segmentfault.com/a/1190000008589736 Vue源码详解之nextTick：MutationObserver只是浮云，microtask才是核心
 9. https://www.cnblogs.com/xiaotanke/p/7448383.html export ，export default 和 import 区别
 10. https://www.cnblogs.com/daiwenru/p/6694530.html vue2.0 子组件和父组件之间的传值
+
+
+nlp
+http://automateddeveloper.blogspot.co.uk/2016/11/using-opennlp-for-named-entity.html
