@@ -15,6 +15,20 @@ Vue
 nlp
 http://automateddeveloper.blogspot.co.uk/2016/11/using-opennlp-for-named-entity.html
 
+```
+
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNext()) {
+            String[] nums = null;
+            nums = sc.nextLine().replace("[","").replace("]","").split(",");
+            int num[]=new int[nums.length];
+            for(int i=0;i<num.length;i++) {
+                num[i] = Integer.valueOf(nums[i]);
+            }
+            int h = sc.nextInt();
+            minEatingSpeed(num, h);
+        }
+
 class Solution {
     public int minEatingSpeed(int[] piles, int H) {
         int lo = 1;
@@ -38,3 +52,5 @@ class Solution {
         return time <= H;
     }
 }
+```
+
