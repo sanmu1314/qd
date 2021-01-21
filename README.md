@@ -53,4 +53,115 @@ class Solution {
     }
 }
 ```
+public class EnglishRule {
+    private static LanguageRule languageRule = new LanguageRule("eng", new ArrayList<Rule>());
 
+    public EnglishRule() {
+        common();
+        number();
+        name();
+        betweenPunctuation();
+        list();
+    }
+
+    public LanguageRule getRule() {
+        return languageRule;
+    }
+
+    private List<Rule> getRuleList() {
+        return languageRule.getRuleList();
+    }
+
+    private void common() {
+
+        languageRule.addRule(new Rule(true, "\\n", ""));
+        languageRule.addRule(new Rule(true, " ", "\\n"));
+
+        languageRule.addRule(new Rule(true, "[\\.\\?!]+\\s+", "[^\\.]"));//分句边界的关键点
+//        languageRule.addRule(new Rule(true, "[\\.\\?!]+", "\\s+[^\\.]"));//分句边界的关键点
+
+        languageRule.addRule(new Rule(true, "[\\.\\?!]+", "\\s*(A |Being|Did|For|He|How|However|I|In|It|Millions|More|She|That|The|There|They|We|What|When|Where|Who|Why)"));
+
+        languageRule.addRule(new Rule(true, "[!?\\.-][\\\"\\'“”]\\s+", "[A-Z]"));
+//        languageRule.addRule(new Rule(true, "[!?\\.-][\\\"\\'\\u{201d}\\u{201c}]\\s+", "[A-Z]"));
+
+        languageRule.addRule(new Rule(true, "(?<=\\S)(!|\\?){3,}", "(?=(\\s|\\Z|$))"));
+
+        languageRule.addRule(new Rule(false, "[\\.\\?!]+\\s*", "(?=[\\.\\?!])"));
+        languageRule.addRule(new Rule(false, "([a-zA-z]°)\\.\\s*", "(?=\\d+)"));
+
+        languageRule.addRule(new Rule(false, "\\s", "(?=[a-z])"));
+//        languageRule.addRule(new Rule(false, "(?<=\\s+)", "(?=[a-z])"));
+//        languageRule.addRule(new Rule(false, "(?<=\\S)@", "(?=\\S)"));
+//        languageRule.addRule(new Rule(true, "(?<=\\S)(!|\\?){3,}", "(?=(\\s|\\Z|$))"));
+    }
+
+    private void number() {
+        languageRule.addRule(new Rule(false, "\\d\\.", "(?=\\d)"));
+//        languageRule.addRule(new Rule(false, "\\s+[\\w]\\.", "\\s+[\\w][\\s|\\.]"));
+    }
+
+    private void name() {
+//        languageRule.addRule(new Rule(false, "(Mr|Mrs|tel)\\.", ""));
+        languageRule.addRule(new Rule(false, "(Mr|Mrs|Ms|Dr|p.m|a.m|tel)\\.", "\\s*"));
+
+//        languageRule.addRule(new Rule(false, "(p\\.m\\.|a\\.m\\.)\\s+", "\\w"));
+        languageRule.addRule(new Rule(true, "(P\\.M\\.|A\\.M\\.)", "\\s+"));
+//        languageRule.addRule(new Rule(false, "[A-Z]\\.", "(?!(Being|Did|For|He|How|However|I|In|It|Millions|More|She|That|The|There|They|We|What|When|Where|Who|Why))"));
+        languageRule.addRule(new Rule(false, "(?<=(?<=^)[A-Z]\\.\\s+|(?<=\\A)[A-Z]\\.\\s+|[A-Z]\\.\\s+|(?<=^)[A-Z][a-z]\\.\\s+|(?<=\\A)[A-Z][a-z]\\.\\s+|(?<=\\s)[A-Z][a-z]\\.\\s)",
+                "(?!(A |Being|Did|For|He|How|However|I|In|It|Millions|More|She|That|The|There|They|We|What|When|Where|Who|Why))"));
+//        languageRule.addRule(new Rule(false, "[\\.| ][A-Z]\\.\\s*", "(?=([A-Z][\\.| ]))"));
+    }
+
+    private void quotes() {
+//        languageRule.addRule(new Rule(false, "(?<=\\s)'(?:[^']|'[a-zA-Z])*'", ""));
+//        languageRule.addRule(new Rule(false, "(?<=\\s)‘(?:[^’]|’[a-zA-Z])*’", ""));
+//        languageRule.addRule(new Rule(false, "(?<=\\s)\\(", "([^\\)]|\\([a-zA-Z])*\\)"));
+//        languageRule.addRule(new Rule(false, "(?<=\\s)\\{", "([^\\}]|\\{[a-zA-Z])*\\}"));
+    }
+
+    private void betweenPunctuation() {
+
+        languageRule.addRule(new Rule(false, "(?<=\\s)'(?:[^']|'[a-zA-Z])*'", ""));
+
+        languageRule.addRule(new Rule(false, "(?<=\\s)‘(?:[^’]|’[a-zA-Z])*’", ""));
+
+        languageRule.addRule(new Rule(false, "\"(?>[^\"\\\\]+|\\\\{2}|\\\\.)*\"", ""));
+//        languageRule.addRule(new Rule(false, "\"(?=(?P<tmp>[^\\\"\\\\]+|\\\\{2}|\\\\.)*)(?P=tmp)\"", ""));
+
+        languageRule.addRule(new Rule(false, "«(?>[^»\\\\]+|\\\\{2}|\\\\.)*»", ""));
+
+        languageRule.addRule(new Rule(false, "“(?>[^”\\\\]+|\\\\{2}|\\\\.)*”", ""));
+
+        languageRule.addRule(new Rule(false, "\\[(?>[^\\]\\\\]+|\\\\{2}|\\\\.)*\\]", ""));
+
+        languageRule.addRule(new Rule(false, "\\((?>[^\\(\\)\\\\]+|\\\\{2}|\\\\.)*\\)", ""));
+
+        //''单引号内不分句，但如果存在以单引号开头的单词目前分句会出现错误
+//        languageRule.addRule(new Rule(false, "(?<=\\s)'(?:[^']|'[a-zA-Z])*'\\S", ""));
+
+        languageRule.addRule(new Rule(false, "(?<=\\s)\\-\\-(?>[^\\-\\-])*\\-\\-", ""));
+    }
+
+    private void list() {
+//        languageRule.addRule(new Rule(true, "\\.", "(\\s+(^)[a-z](\\.)|(\\A)[a-z](\\.)|(\\s)[a-z](\\.))\\s"));
+        languageRule.addRule(new Rule(false, "((?<=^)[a-z]\\.|(?<=\\A)[a-z]\\.|(?<=\\s)[a-z]\\.)", "\\s*(?!(A |Being|Did|For|He|How|However|I|In|It|Millions|More|She|That|The|There|They|We|What|When|Where|Who|Why))"));
+
+//        languageRule.addRule(new Rule(false, "(?<=\\()[a-z]+(?=\\))|(?<=^)[a-z]+(?=\\))|(?<=\\A)[a-z]+(?=\\))|(?<=\\s)[a-z]+(?=\\))", ""));
+
+//        languageRule.addRule(new Rule(false, "(?<=^)[a-z](?=\\.)|(?<=\\A)[a-z](?=\\.)|(?<=\\s)[a-z](?=\\.)", ""));
+//        languageRule.addRule(new Rule(true, "", "\\s+((?<=\\s)\\d{1,2}\\.(?=\\s)|^\\d{1,2}\\.(?=\\s)|(?<=\\s)\\d{1,2}\\.(?=\\))|^\\d{1,2}\\.(?=\\))|(?<=\\s\\-)\\d{1,2}\\.(?=\\s)|(?<=^\\-)\\d{1,2}\\.(?=\\s)|(?<=\\s\\⁃)\\d{1,2}\\.(?=\\s)|(?<=^\\⁃)\\d{1,2}\\.(?=\\s)|(?<=\\s\\-)\\d{1,2}\\.(?=\\))|(?<=^\\-)\\d{1,2}\\.(?=\\))|(?<=\\s\\⁃)\\d{1,2}\\.(?=\\))|(?<=^\\⁃)\\d{1,2}\\.(?=\\)))"));
+        languageRule.addRule(new Rule(false, "(?<=\\s)\\d{1,2}\\.(\\s)|^\\d{1,2}\\.(\\s)|" +
+                "(?<=\\s)\\d{1,2}\\.(\\))|^\\d{1,2}\\.(\\))|(?<=\\s\\-)\\d{1,2}\\.(\\s)|(?<=^\\-)\\d{1,2}\\.(\\s)|" +
+                "(?<=\\s\\⁃)\\d{1,2}\\.(\\s)|(?<=^\\⁃)\\d{1,2}\\.(\\s)|(?<=\\s\\-)\\d{1,2}\\.(\\))|(?<=^\\-)\\d{1,2}\\.(\\))|" +
+                "(?<=\\s\\⁃)\\d{1,2}\\.(\\))|(?<=^\\⁃)\\d{1,2}\\.(\\))|(\\•)\\s*\\d{1,2}\\.(\\s)|(?<=\\s)\\d{1,2}(\\))",
+                "\\s*"));
+//        languageRule.addRule(new Rule(false, "((\\s)\\d{1,2}\\.(?=\\s)|^\\d{1,2}\\.(?=\\s)|(\\s)\\d{1,2}\\.(?=\\))|^\\d{1,2}\\.(?=\\))|(\\s\\-)\\d{1,2}\\.(?=\\s)|(^\\-)\\d{1,2}\\.(?=\\s)|(\\s\\⁃)\\d{1,2}\\.(?=\\s)|(^\\⁃)\\d{1,2}\\.(?=\\s)|(\\s\\-)\\d{1,2}\\.(?=\\))|(^\\-)\\d{1,2}\\.(?=\\))|(\\s\\⁃)\\d{1,2}\\.(?=\\))|(^\\⁃)\\d{1,2}\\.(?=\\)))", ""));
+        languageRule.addRule(new Rule(true, "", "\\s+((?<=\\s)\\d{1,2}\\.(?=\\s)|" +
+                "^\\d{1,2}\\.(?=\\s)|(?<=\\s)\\d{1,2}\\.(?=\\))|^\\d{1,2}\\.(?=\\))|((?<=\\s)\\-)\\d{1,2}\\.(?=\\s)|" +
+                "(^\\-)\\d{1,2}\\.(?=\\s)|((?<=\\s)\\⁃)\\d{1,2}\\.(?=\\s)|(^\\⁃)\\d{1,2}\\.(?=\\s)|((?<=\\s)\\-)\\d{1,2}\\.(?=\\))|" +
+                "(^\\-)\\d{1,2}\\.(?=\\))|((?<=\\s)\\⁃)\\d{1,2}\\.(?=\\))|(^\\⁃)\\d{1,2}\\.(?=\\))|(\\•)\\s*\\d{1,2}\\.(\\s)|" +
+                "(?<=\\s)\\d{1,2}(?=\\)))"));
+    }
+
+}
