@@ -165,3 +165,115 @@ public class EnglishRule {
     }
 
 }
+
+<languageRules>
+  <languageRule name="eng">
+
+    <!--common-->
+    <rule break="yes">
+      <beforebreak>\n</beforebreak>
+      <afterbreak></afterbreak>
+    </rule>
+    <rule break="yes">
+      <beforebreak> </beforebreak>
+      <afterbreak>\n</afterbreak>
+    </rule>
+    <rule break="yes">
+      <beforebreak>[\.\?!]+\s+</beforebreak>
+      <afterbreak>[^\.]</afterbreak>
+    </rule>
+    <rule break="yes">
+      <beforebreak>[\.\?!]+</beforebreak>
+      <afterbreak>\s*(A |Being|Did|For|He|How|However|I|In|It|Millions|More|She|That|The|There|They|We|What|When|Where|Who|Why)</afterbreak>
+    </rule>
+    <rule break="yes">
+      <beforebreak>[!?\.-][\"\'“”]\s+</beforebreak>
+      <afterbreak>[A-Z]</afterbreak>
+    </rule>
+    <rule break="yes">
+      <beforebreak>(?&lt;=\S)(!|\?){3,}</beforebreak>
+      <afterbreak>(?=(\s|\Z|$))</afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>[\.\?!]+\s*</beforebreak>
+      <afterbreak>(?=[\.\?!])</afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>([a-zA-z]°)\.\s*</beforebreak>
+      <afterbreak>(?=\d+)</afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>\s</beforebreak>
+      <afterbreak>(?=[a-z])</afterbreak>
+    </rule>
+
+    <!-- number -->
+    <rule break="no">
+      <beforebreak>\d\.</beforebreak>
+      <afterbreak>(?=\d)</afterbreak>
+    </rule>
+
+    <!-- name -->
+    <rule break="no">
+      <beforebreak>(Mr|Mrs|Ms|Dr|p.m|a.m|tel)\.</beforebreak>
+      <afterbreak>\s*</afterbreak>
+    </rule>
+    <rule break="yes">
+      <beforebreak>(P\.M\.|A\.M\.)</beforebreak>
+      <afterbreak>\s+</afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>(?&lt;=(?&lt;=^)[A-Z]\.\s+|(?&lt;=\A)[A-Z]\.\s+|[A-Z]\.\s+|(?&lt;=^)[A-Z][a-z]\.\s+|(?&lt;=\A)[A-Z][a-z]\.\s+|(?&lt;=\s)[A-Z][a-z]\.\s)</beforebreak>
+      <afterbreak>(?!(A |Being|Did|For|He|How|However|I|In|It|Millions|More|She|That|The|There|They|We|What|When|Where|Who|Why))</afterbreak>
+    </rule>
+
+    <!-- betweenPunctuation -->
+    <rule break="no">
+      <beforebreak>(?&lt;=\s)'(?:[^']|'[a-zA-Z])*'</beforebreak>
+      <afterbreak></afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>(?&lt;=\s)‘(?:[^’]|’[a-zA-Z])*’</beforebreak>
+      <afterbreak></afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>"(?>[^"\\]+|\\{2}|\\.)*"</beforebreak>
+      <afterbreak></afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>«(?>[^»\\]+|\\{2}|\\.)*»</beforebreak>
+      <afterbreak></afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>“(?>[^”\\]+|\\{2}|\\.)*”</beforebreak>
+      <afterbreak></afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>\[(?>[^\]\\]+|\\{2}|\\.)*\]</beforebreak>
+      <afterbreak></afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>\((?>[^\(\)\\]+|\\{2}|\\.)*\)</beforebreak>
+      <afterbreak></afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>(?&lt;=\s)\-\-(?>[^\-\-])*\-\-</beforebreak>
+      <afterbreak></afterbreak>
+    </rule>
+
+    <!-- list -->
+    <rule break="no">
+      <beforebreak>((?&lt;=^)[a-z]\.|(?&lt;=\A)[a-z]\.|(?&lt;=\s)[a-z]\.)</beforebreak>
+      <afterbreak>\s*(?!(A |Being|Did|For|He|How|However|I|In|It|Millions|More|She|That|The|There|They|We|What|When|Where|Who|Why))</afterbreak>
+    </rule>
+    <rule break="no">
+      <beforebreak>(?&lt;=\s)\d{1,2}\.(\s)|^\d{1,2}\.(\s)|(?&lt;=\s)\d{1,2}\.(\))|^\d{1,2}\.(\))|(?&lt;=\s\-)\d{1,2}\.(\s)|(?&lt;=^\-)\d{1,2}\.(\s)|(?&lt;=\s\⁃)\d{1,2}\.(\s)|(?&lt;=^\⁃)\d{1,2}\.(\s)|(?&lt;=\s\-)\d{1,2}\.(\))|(?&lt;=^\-)\d{1,2}\.(\))|(?&lt;=\s\⁃)\d{1,2}\.(\))|(?&lt;=^\⁃)\d{1,2}\.(\))|(\•)\s*\d{1,2}\.(\s)|(?&lt;=\s)\d{1,2}(\))</beforebreak>
+      <afterbreak>\s*</afterbreak>
+    </rule>
+    <rule break="yes">
+      <beforebreak></beforebreak>
+      <afterbreak>\s+((?&lt;=\s)\d{1,2}\.(?=\s)|^\d{1,2}\.(?=\s)|(?&lt;=\s)\d{1,2}\.(?=\))|^\d{1,2}\.(?=\))|((?&lt;=\s)\-)\d{1,2}\.(?=\s)|(^\-)\d{1,2}\.(?=\s)|((?&lt;=\s)\⁃)\d{1,2}\.(?=\s)|(^\⁃)\d{1,2}\.(?=\s)|((?&lt;=\s)\-)\d{1,2}\.(?=\))|(^\-)\d{1,2}\.(?=\))|((?&lt;=\s)\⁃)\d{1,2}\.(?=\))|(^\⁃)\d{1,2}\.(?=\))|(\•)\s*\d{1,2}\.(\s)|(?&lt;=\s)\d{1,2}(?=\)))</afterbreak>
+    </rule>
+
+  </languageRule>
+</languageRules>
