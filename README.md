@@ -20,6 +20,9 @@ https://www.nuxtjs.cn/
 nlp
 http://automateddeveloper.blogspot.co.uk/2016/11/using-opennlp-for-named-entity.html
 
+websocket
+https://juejin.cn/post/6844903968766853127
+
 ```
 
         Scanner sc = new Scanner(System.in);
