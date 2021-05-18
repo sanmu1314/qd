@@ -2,6 +2,8 @@ python
 
 https://mp.weixin.qq.com/s/_II1zk7Am0XLK6S2xLUQxg
 
+https://github.com/jackfrued/Python-100-Days
+
 
 # qd
 Vue
