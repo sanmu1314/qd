@@ -1,3 +1,8 @@
+python
+
+https://mp.weixin.qq.com/s/_II1zk7Am0XLK6S2xLUQxg
+
+
 # qd
 Vue
 1. https://www.jianshu.com/p/edaf43e9384f ES6：export default 和 export 区别 - 简书
